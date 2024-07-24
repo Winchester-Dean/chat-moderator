@@ -12,7 +12,7 @@ class Main:
         self,
         directory: str = "handlers"
     ):
-        handlers = []
+        self.handlers = []
 
         for files in os.listdir(directory):
             if files.endswith("_handle.py"):
@@ -25,11 +25,12 @@ class Main:
                 for classname, classobj in inspect.getmembers(
                     modules, inspect.isclass
                 ):
-                    handlers.append(classobj())
+                    if classname.endswith("Handler") and classname != "BaseHandler":
+                        self.handlers.append((classobj()))
     
     def start(self):
-        for handler in handlers:
-            handler[0].register(dp)
+        for index, handler in enumerate(self.handlers):
+            handler.register(dp)
 
         executor.start_polling(dp, skip_updates=True)
 
