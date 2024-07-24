@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from .base_handle import BaseHandler
 
-class EchoHandler(BaseHandler):
+class EchoHandle(BaseHandler):
     def register(self, dispatcher: Dispatcher):
         dispatcher.register_message_handler(self.echo)
     
